@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model alerta {
+  id                    Int       @id @default(autoincrement())
+  dias_antes_vencimento Int?
+  status                String?   @db.VarChar(100)
+  data_gerado           DateTime? @db.Date
+  lote_id               Int?
+  lote                  lote?     @relation(fields: [lote_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model laboratorio {
+  id            Int           @id @default(autoincrement())
+  nome          String?       @db.VarChar(100)
+  cnpj          String?       @db.VarChar(20)
+  representante String?       @db.VarChar(100)
+  medicamento   medicamento[]
+}
+
+model lote {
+  id               Int          @id @default(autoincrement())
+  numero_lote      String?      @db.VarChar(100)
+  quantidade       Int?
+  data_recebimento DateTime?    @db.Date
+  data_validade    DateTime?    @db.Date
+  medicamento_id   Int?
+  alerta           alerta[]
+  medicamento      medicamento? @relation(fields: [medicamento_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model medicamento {
+  id             Int          @id @default(autoincrement())
+  nome           String?      @db.VarChar(100)
+  dosagem        String?      @db.VarChar(50)
+  tipo           String?      @db.VarChar(50)
+  laboratorio_id Int?
+  lote           lote[]
+  laboratorio    laboratorio? @relation(fields: [laboratorio_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
