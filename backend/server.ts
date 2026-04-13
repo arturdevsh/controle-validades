@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import cors from 'cors'
 import express from 'express'
 import bodyParser from 'body-parser'
 import medicamentosRouter from './routes/medicamentos'
@@ -8,6 +9,7 @@ import alertasRouter from './routes/alertas'
 
 const app = express()
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use('/medicamentos', medicamentosRouter)
 app.use('/laboratorios', laboratoriosRouter)
