@@ -96,16 +96,16 @@ function MedicamentosListar() {
             <table className="min-w-full bg-white shadow-md rounded-lg">
                 <thead>
                     <tr>
-                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold">
+                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold text-center">
                             Nome
                         </th>
-                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold">
+                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold text-center">
                             Dosagem
                         </th>
-                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold">
+                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold text-center">
                             Tipo
                         </th>
-                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold">
+                        <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold text-center">
                             Ações
                         </th>
                     </tr>
@@ -113,29 +113,31 @@ function MedicamentosListar() {
                 <tbody>
                     {medicamentos.map((medicamento) => (
                         <tr key={medicamento.id}>
-                            <td className="py-2 px-4 border-b">
+                            <td className="py-2 px-4 border-b text-center">
                                 {medicamento.nome}
                             </td>
-                            <td className="py-2 px-4 border-b">
+                            <td className="py-2 px-4 border-b text-center">
                                 {medicamento.dosagem}
                             </td>
-                            <td className="py-2 px-4 border-b">
+                            <td className="py-2 px-4 border-b text-center">
                                 {medicamento.tipo}
                             </td>
-                            <td className="py-2 px-4 border-b flex gap-2">
-                                <button
-                                    onClick={() => setEditando(medicamento)}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                >
-                                    Editar
-                                </button>
+                            <td className="py-2 px-4 border-b text-center">
+                                <div className="flex gap-2 justify-center">
+                                    <button
+                                        onClick={() => setEditando(medicamento)}
+                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    >
+                                        Editar
+                                    </button>
 
-                                <button
-                                    onClick={() => excluir(medicamento.id)}
-                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                >
-                                    Excluir
-                                </button>
+                                    <button
+                                        onClick={() => excluir(medicamento.id)}
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    >
+                                        Excluir
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}

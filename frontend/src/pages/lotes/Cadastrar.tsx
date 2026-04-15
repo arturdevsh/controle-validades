@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function LotesCadastrar() {
     const [numero, setNumero] = useState('')
@@ -6,9 +6,32 @@ function LotesCadastrar() {
     const [quantidade, setQuantidade] = useState('')
     const [data_recebimento, setData_recebimento] = useState('')
     const [medicamento_id, setMedicamento_id] = useState('')
+    const [medicamentos, setMedicamentos] = useState([])
+
+    // Carregar medicamentos para o select
+    useEffect(() => {
+        fetch('http://localhost:3000/medicamentos')
+            .then((res) => res.json())
+            .then((data) => {
+                setMedicamentos(data)
+            })
+    }, [])
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
+        if (new Date(data_recebimento) > new Date()) {
+            alert('A data de recebimento não pode ser maior que hoje.')
+            return
+        } else if (new Date(data_validade) < new Date()) {
+            alert('A data de validade não pode ser menor que hoje.')
+            return
+        } else if (new Date(data_validade) < new Date(data_recebimento)) {
+            alert(
+                'A data de validade não pode ser menor que a data de recebimento.'
+            )
+            return
+        }
+
         // Lógica para cadastrar o lote
         fetch('http://localhost:3000/lotes', {
             method: 'POST',
@@ -109,13 +132,18 @@ function LotesCadastrar() {
                     >
                         ID do Medicamento
                     </label>
-                    <input
-                        className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="medicamento_id"
-                        type="number"
+                    <select
                         value={medicamento_id}
                         onChange={(e) => setMedicamento_id(e.target.value)}
-                    />
+                        className="shadow border rounded py-2 px-3 text-gray-700"
+                    >
+                        <option value="">Selecione um medicamento</option>
+                        {medicamentos.map((med: any) => (
+                            <option key={med.id} value={med.id}>
+                                {med.nome}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <button
                     type="submit"
