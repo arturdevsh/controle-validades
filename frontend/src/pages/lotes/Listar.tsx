@@ -172,7 +172,7 @@ function LotesListar() {
                             Data de Recebimento
                         </th>
                         <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold text-center">
-                            Medicamento ID
+                            Medicamento
                         </th>
                         <th className="py-2 px-4 bg-gray-200 text-gray-600 font-semibold text-center">
                             Ações
@@ -199,8 +199,8 @@ function LotesListar() {
                                 ).toLocaleDateString()}
                             </td>
                             <td className="py-2 px-4 border-b text-center">
-                                {lote.medicamento_nome} (ID:{' '}
-                                {lote.medicamento_id})
+                                {lote.medicamento?.nome || 'N/A'}
+                                {/* Exibe o nome do medicamento relacionado */}
                             </td>
                             <td className="py-2 px-4 border-b text-center">
                                 <div className="flex gap-2 justify-center">

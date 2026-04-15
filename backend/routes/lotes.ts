@@ -4,7 +4,7 @@ import { prisma } from '../db'
 const router = Router()
 
 router.get('/', async (req, res) => {
-    const lotes = await prisma.lote.findMany()
+    const lotes = await prisma.lote.findMany({ include: { medicamento: true } })
     res.json(lotes)
 })
 
