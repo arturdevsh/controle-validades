@@ -27,7 +27,7 @@ function Dashboard() {
     }, [])
 
     useEffect(() => {
-        fetch('http://localhost:3000/alertas')
+        fetch('http://localhost:3000/lotes/alerta')
             .then((res) => res.json())
             .then((data) => setAlertas(data))
     }, [])
@@ -42,14 +42,25 @@ function Dashboard() {
                 <Card title="Alertas" count={alertas.length} />
             </div>
 
-            <h2 className="text-2xl font-bold mb-4">Lista de Medicamentos</h2>
-            <ul>
-                {medicamentos.map((medicamento: any) => (
-                    <li key={medicamento.id} className="mb-2">
-                        {medicamento.nome}
-                    </li>
+            <h2 className="text-2xl font-bold mb-4">
+                Lotes com Validade Próxima
+            </h2>
+            <div className="flex overflow-x-auto gap-4">
+                {alertas.map((lote: any) => (
+                    <div
+                        key={lote.id}
+                        className="min-w-[200px] bg-white shadow rounded-lg p-4"
+                    >
+                        <p className="font-bold">{lote.medicamento.nome}</p>
+                        <p className="text-sm">{lote.numero_lote}</p>
+                        <p className="text-sm text-red-500">
+                            {new Date(lote.data_validade).toLocaleDateString(
+                                'pt-BR'
+                            )}
+                        </p>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     )
 }

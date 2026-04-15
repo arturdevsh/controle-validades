@@ -8,6 +8,23 @@ router.get('/', async (req, res) => {
     res.json(lotes)
 })
 
+router.get('/alerta', async (req, res) => {
+    const hoje = new Date()
+    const alerta = await prisma.lote.findMany({
+        where: {
+            data_validade: {
+                gte: hoje,
+                lte: new Date(hoje.getTime() + 30 * 24 * 60 * 60 * 1000),
+            },
+        },
+        include: { medicamento: true },
+        orderBy: {
+            data_validade: 'asc',
+        },
+    })
+    res.json(alerta)
+})
+
 router.post('/', async (req, res) => {
     const {
         numero_lote,
