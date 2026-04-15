@@ -49,11 +49,16 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params
 
-    const medicamento = await prisma.medicamento.delete({
-        where: { id: Number(id) },
-    })
-
-    res.json(medicamento)
+    try {
+        const medicamento = await prisma.medicamento.delete({
+            where: { id: Number(id) },
+        })
+        res.json(medicamento)
+    } catch (error) {
+        res.status(400).json({
+            erro: 'Não é possível excluir — existem lotes associados.',
+        })
+    }
 })
 
 export default router

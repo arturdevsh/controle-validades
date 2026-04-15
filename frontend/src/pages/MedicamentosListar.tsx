@@ -14,7 +14,11 @@ function MedicamentosListar() {
     function excluir(id: number) {
         fetch(`http://localhost:3000/medicamentos/${id}`, {
             method: 'DELETE',
-        }).then(() => {
+        }).then((res) => {
+            if (!res.ok) {
+                alert('Não foi possível excluir o medicamento')
+                return
+            }
             // Atualiza a lista de medicamentos após a exclusão
             setMedicamentos(medicamentos.filter((m) => m.id !== id))
         })
